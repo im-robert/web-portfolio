@@ -69,6 +69,7 @@ export const translations = {
       title_part1: "Arquitecturas sólidas,",
       title_accent: "código",
       title_part2: "duradero",
+      title_part3: "para la era digital.",
       description: "Especializado en la construcción de sistemas backend de alto rendimiento con .NET y arquitecturas modernas. Enfocado en la calidad del código y la escalabilidad.",
       cta_primary: "Ver Proyectos",
       cta_secondary: "Descargar CV",
