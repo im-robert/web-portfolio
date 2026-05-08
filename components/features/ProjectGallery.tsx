@@ -203,7 +203,7 @@ export default function ProjectGallery() {
               }}
             >
               {t.projects.subtitle.split(' ')[0]}{" "}
-              <em style={{ fontStyle: "italic", color: "var(--accent)" }}>{t.projects.subtitle.split(' ').slice(1).join(' ')}.</em>
+              <em style={{ fontStyle: "italic", color: "var(--accent)" }}>{t.projects.subtitle.split(' ').slice(1).join(' ')}</em>
             </h2>
 
             {/* Filters */}

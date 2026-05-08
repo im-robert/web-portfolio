@@ -171,8 +171,8 @@ export default function HeroSection() {
               {t.hero.cta_primary}
             </a>
             <a
-              href="/cv-roberto-capellan.pdf"
-              download
+              href={t.hero.cv_url}
+              download={t.hero.cv_filename + ".pdf"}
               className="btn-ghost"
               style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", padding: "1.15rem 2.75rem", fontSize: "1rem" }}
             >

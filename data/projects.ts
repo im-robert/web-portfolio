@@ -30,7 +30,7 @@ export const projects: Project[] = [
     stack: ["Next.js", "Supabase", "TypeScript", "JWT"],
     category: "Fullstack",
     featured: true,
-    repoUrl: "https://github.com/im-robert/lux-state-management"
+    repoUrl: "https://github.com/im-robert/Lux-State"
   },
   {
     id: "ejercicio-integracion",

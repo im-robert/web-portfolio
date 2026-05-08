@@ -82,7 +82,7 @@ export default function TechStack() {
             }}
           >
             {t.stack.title.split(' ')[0]}{" "}
-            <em style={{ fontStyle: "italic", color: "var(--accent)" }}>{t.stack.title.split(' ').slice(1).join(' ')}.</em>
+            <em style={{ fontStyle: "italic", color: "var(--accent)" }}>{t.stack.title.split(' ').slice(1).join(' ')}</em>
           </h2>
         </motion.div>
 

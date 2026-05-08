@@ -192,7 +192,7 @@ export default function ExperienceTimeline() {
             }}
           >
             {t.experience.subtitle.split(' ')[0]}{" "}
-            <em style={{ fontStyle: "italic", color: "var(--accent)" }}>{t.experience.subtitle.split(' ').slice(1).join(' ')}.</em>
+            <em style={{ fontStyle: "italic", color: "var(--accent)" }}>{t.experience.subtitle.split(' ').slice(1).join(' ')}</em>
           </h2>
         </motion.div>
 

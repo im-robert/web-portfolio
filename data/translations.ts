@@ -19,6 +19,8 @@ export const translations = {
       description: "Specialized in building high-performance backend systems with .NET and modern software architectures. Focused on code quality and scalability.",
       cta_primary: "View Projects",
       cta_secondary: "Download CV",
+      cv_url: "/cv-en.pdf",
+      cv_filename: "E-Roberto Capellan CV ATS",
       scroll: "Scroll to explore",
     },
     stack: {
@@ -73,6 +75,8 @@ export const translations = {
       description: "Especializado en la construcción de sistemas backend de alto rendimiento con .NET y arquitecturas modernas. Enfocado en la calidad del código y la escalabilidad.",
       cta_primary: "Ver Proyectos",
       cta_secondary: "Descargar CV",
+      cv_url: "/cv-es.pdf",
+      cv_filename: "Roberto Capellan CV ATS",
       scroll: "Desliza para explorar",
     },
     stack: {
