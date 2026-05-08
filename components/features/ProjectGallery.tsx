@@ -1,16 +1,17 @@
+
 "use client";
 
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { projects } from "@/data/projects";
-import type { ProjectCategory } from "@/interfaces";
-import { ExternalLink, ArrowUpRight } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+import type { ProjectCategory, Project } from "@/interfaces";
+import { ArrowUpRight } from "lucide-react";
 
-// SVG icon for GitHub (missing in this lucide-react version)
 const GithubIcon = ({ size = 13 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
-    <path d="M9 18c-4.51 2-5-2-7-2"/>
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+    <path d="M9 18c-4.51 2-5-2-7-2" />
   </svg>
 );
 
@@ -18,22 +19,24 @@ const categories: Array<"All" | ProjectCategory> = [
   "All",
   "Backend",
   "Fullstack",
-  "Integrations",
 ];
 
 const categoryColors: Record<ProjectCategory, string> = {
   Backend: "#5B8DD9",
   Fullstack: "#7BC08B",
-  Integrations: "#CF8A5B",
 };
 
-function ProjectCard({ project, index }: { project: (typeof projects)[0]; index: number }) {
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const { language } = useLanguage();
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
   const [hovered, setHovered] = useState(false);
 
   return (
-    <motion.article
+    <motion.a
+      href={project.repoUrl || "#"}
+      target="_blank"
+      rel="noopener noreferrer"
       ref={ref}
       layout
       initial={{ opacity: 0, y: 24 }}
@@ -43,140 +46,123 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
       className="card"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ padding: "2rem", display: "flex", flexDirection: "column", gap: "1.25rem" }}
+      style={{
+        padding: "2.5rem",
+        display: "flex",
+        flexDirection: "column",
+        gap: "1.75rem",
+        textDecoration: "none",
+        cursor: "pointer",
+        position: "relative",
+        overflow: "hidden"
+      }}
     >
-      {/* Category badge + featured */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.62rem",
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            padding: "0.2rem 0.6rem",
-            borderRadius: "2px",
-            background: `${categoryColors[project.category]}18`,
-            color: categoryColors[project.category],
-            border: `1px solid ${categoryColors[project.category]}35`,
-          }}
-        >
-          {project.category}
-        </span>
-        {project.featured && (
+      {/* Hover Background Accent */}
+      <motion.div
+        animate={{ opacity: hovered ? 1 : 0 }}
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(45deg, var(--accent-dim), transparent)",
+          zIndex: 0,
+          pointerEvents: "none"
+        }}
+      />
+
+      <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: "1.75rem", height: "100%" }}>
+        {/* Category badge + featured */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span
             style={{
               fontFamily: "var(--font-mono)",
-              fontSize: "0.62rem",
-              letterSpacing: "0.1em",
-              color: "var(--accent)",
+              fontSize: "0.7rem",
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+              padding: "0.3rem 0.85rem",
+              borderRadius: "4px",
+              background: `${categoryColors[project.category]}18`,
+              color: categoryColors[project.category],
+              border: `1px solid ${categoryColors[project.category]}40`,
             }}
           >
-            ★ Featured
+            {project.category}
           </span>
-        )}
-      </div>
-
-      {/* Title */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem" }}>
-        <h3
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "clamp(1.2rem, 2vw, 1.6rem)",
-            fontWeight: 400,
-            color: hovered ? "var(--accent)" : "var(--text-1)",
-            lineHeight: 1.2,
-            transition: "color 250ms ease",
-          }}
-        >
-          {project.name}
-        </h3>
-        <motion.div
-          animate={{ rotate: hovered ? -45 : 0 }}
-          transition={{ duration: 0.25 }}
-          style={{ color: "var(--text-3)", flexShrink: 0, marginTop: "0.2rem" }}
-        >
-          <ArrowUpRight size={16} />
-        </motion.div>
-      </div>
-
-      {/* Description */}
-      <p style={{ fontSize: "0.85rem", color: "var(--text-2)", lineHeight: 1.65 }}>
-        {project.description}
-      </p>
-
-      {/* Challenge / Solution */}
-      <div
-        style={{
-          borderLeft: "2px solid var(--border)",
-          paddingLeft: "1rem",
-          display: "flex",
-          flexDirection: "column",
-          gap: "0.6rem",
-        }}
-      >
-        <div>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-3)" }}>
-            Challenge
-          </span>
-          <p style={{ fontSize: "0.8rem", color: "var(--text-2)", marginTop: "0.25rem", lineHeight: 1.55 }}>
-            {project.challenge}
-          </p>
-        </div>
-        <div>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-3)" }}>
-            Solution
-          </span>
-          <p style={{ fontSize: "0.8rem", color: "var(--text-2)", marginTop: "0.25rem", lineHeight: 1.55 }}>
-            {project.solution}
-          </p>
-        </div>
-      </div>
-
-      {/* Stack tags */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginTop: "auto" }}>
-        {project.stack.map((tech) => (
-          <span key={tech} className="tag" style={{ fontSize: "0.62rem" }}>
-            {tech}
-          </span>
-        ))}
-      </div>
-
-      {/* Links */}
-      {(project.repoUrl || project.demoUrl) && (
-        <div style={{ display: "flex", gap: "1rem", paddingTop: "0.75rem", borderTop: "1px solid var(--border)" }}>
-          {project.repoUrl && (
-            <a
-              href={project.repoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: "flex", alignItems: "center", gap: "0.375rem", fontFamily: "var(--font-mono)", fontSize: "0.65rem", letterSpacing: "0.08em", color: "var(--text-3)", transition: "color 250ms ease" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-3)")}
+          {project.featured && (
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.7rem",
+                letterSpacing: "0.12em",
+                color: "var(--accent)",
+                fontWeight: 500,
+              }}
             >
-              <GithubIcon size={13} />
-              Code
-            </a>
-          )}
-          {project.demoUrl && (
-            <a
-              href={project.demoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: "flex", alignItems: "center", gap: "0.375rem", fontFamily: "var(--font-mono)", fontSize: "0.65rem", letterSpacing: "0.08em", color: "var(--text-3)", transition: "color 250ms ease" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-3)")}
-            >
-              <ExternalLink size={13} />
-              Demo
-            </a>
+              ★ {language === 'en' ? 'Featured' : 'Destacado'}
+            </span>
           )}
         </div>
-      )}
-    </motion.article>
+
+        {/* Title */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem" }}>
+          <h3
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(1.5rem, 2.5vw, 2.1rem)",
+              fontWeight: 400,
+              color: hovered ? "var(--accent)" : "var(--text-1)",
+              lineHeight: 1.2,
+              transition: "color 250ms ease",
+            }}
+          >
+            {project.name[language]}
+          </h3>
+          <motion.div
+            animate={{ rotate: hovered ? -45 : 0, scale: hovered ? 1.2 : 1 }}
+            transition={{ duration: 0.25 }}
+            style={{ color: hovered ? "var(--accent)" : "var(--text-3)", flexShrink: 0, marginTop: "0.4rem" }}
+          >
+            <ArrowUpRight size={24} />
+          </motion.div>
+        </div>
+
+        {/* Description */}
+        <p style={{ fontSize: "1.05rem", color: "var(--text-2)", lineHeight: 1.6 }}>
+          {project.description[language]}
+        </p>
+
+        {/* Bottom bar with icon and tags */}
+        <div style={{ marginTop: "auto", display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "1rem", paddingTop: "1rem" }}>
+          {/* Stack tags */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
+            {project.stack.map((tech: string) => (
+              <span key={tech} className="tag" style={{ fontSize: "0.8rem", padding: "0.4rem 1rem" }}>
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          {/* GitHub indicator */}
+          <motion.div
+            animate={{ y: hovered ? 0 : 4, opacity: hovered ? 1 : 0.5 }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.8rem",
+              color: "var(--text-3)",
+            }}
+          >
+            <GithubIcon size={18} />
+          </motion.div>
+        </div>
+      </div>
+    </motion.a>
   );
 }
 
 export default function ProjectGallery() {
+  const { t, language } = useLanguage();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [activeFilter, setActiveFilter] = useState<"All" | ProjectCategory>("All");
@@ -184,7 +170,7 @@ export default function ProjectGallery() {
   const filtered = activeFilter === "All" ? projects : projects.filter((p) => p.category === activeFilter);
 
   return (
-    <section id="proyectos" className="section" style={{ borderTop: "1px solid var(--border)" }}>
+    <section id="projects" className="section" style={{ borderTop: "1px solid var(--border)" }}>
       <div className="container">
         {/* Header */}
         <motion.div
@@ -192,44 +178,44 @@ export default function ProjectGallery() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] as any }}
-          style={{ marginBottom: "3rem" }}
+          style={{ marginBottom: "5rem" }}
         >
           <span
             style={{
               fontFamily: "var(--font-mono)",
-              fontSize: "0.68rem",
-              letterSpacing: "0.15em",
+              fontSize: "0.8rem",
+              letterSpacing: "0.2em",
               textTransform: "uppercase",
               color: "var(--text-3)",
               display: "block",
-              marginBottom: "0.75rem",
+              marginBottom: "1rem",
             }}
           >
-            04. Projects
+            04. {t.projects.title}
           </span>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "1.5rem" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem" }}>
             <h2
               style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "clamp(2.2rem, 5vw, 3.75rem)",
+                fontSize: "clamp(2.8rem, 6vw, 4.5rem)",
                 fontWeight: 300,
                 color: "var(--text-1)",
               }}
             >
-              Selected{" "}
-              <em style={{ fontStyle: "italic", color: "var(--accent)" }}>works.</em>
+              {t.projects.subtitle.split(' ')[0]}{" "}
+              <em style={{ fontStyle: "italic", color: "var(--accent)" }}>{t.projects.subtitle.split(' ').slice(1).join(' ')}.</em>
             </h2>
 
             {/* Filters */}
-            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveFilter(cat)}
                   className={`tag ${activeFilter === cat ? "active" : ""}`}
-                  style={{ cursor: "pointer", background: "none", border: "none" }}
+                  style={{ cursor: "pointer", background: "none", border: "none", padding: "0.5rem 1.25rem", fontSize: "0.85rem" }}
                 >
-                  {cat}
+                  {cat === 'All' ? (language === 'en' ? 'All' : 'Todos') : cat}
                 </button>
               ))}
             </div>
@@ -241,8 +227,8 @@ export default function ProjectGallery() {
           layout
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
-            gap: "1.25rem",
+            gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
+            gap: "2.5rem",
           }}
         >
           <AnimatePresence mode="popLayout">

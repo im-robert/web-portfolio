@@ -1,52 +1,96 @@
+
 import { Experience } from "@/interfaces";
 
 export const experiences: Experience[] = [
   {
     id: "ondp",
     company: "Oficina Nacional de Defensa Pública",
-    role: "Senior Full Stack Developer",
-    period: "Jan 2022 — Present",
-    startYear: 2022,
+    role: {
+      en: "Software Developer",
+      es: "Desarrollador de software"
+    },
+    period: {
+      en: "Dec 2025 — Present",
+      es: "Dic 2025 — Presente"
+    },
+    startYear: 2025,
     endYear: null,
-    description:
-      "Design and development of high-availability judicial management systems, serving more than 200 public defenders nationwide.",
-    achievements: [
-      "Successful migration of legacy system to .NET 8, reducing API response times by 60%.",
-      "Design and implementation of a decoupled microservices architecture using Azure Service Bus.",
-      "Development of an automated reporting engine that reduced manual team workload by 40%.",
-    ],
-    technologies: [".NET 8", "C#", "SQL Server", "Azure", "Docker"],
+    description: {
+      en: "Development of the ONDP case management system for secretaries, coordinators, and public defenders, serving approximately 500 users nationwide.",
+      es: "Desarrollo del sistema de gestión de casos de la ONDP para uso de secretarias, coordinadores y defensores públicos para uso nacional de un aproximado de 500 usuarios."
+    },
+    achievements: {
+      en: [
+        "Developed and implemented a pilot test for the case management system across Santo Domingo offices.",
+        "Implemented performance testing (soak, stress, spike, load) using K6.",
+        "Implemented an N-tier architecture (Data, Domain, Services, Testing, Presentation).",
+      ],
+      es: [
+        "Desarrollo e implementación de piloto de pruebas del sistema de gestión de casos para oficinas en Santo Domingo.",
+        "Implementación de pruebas de rendimiento (soak, strees, spike, load) con K6 en el sistema.",
+        "Implementación de arquitectura en capas (Data, Domain, Services, Testing, Presentación).",
+      ]
+    },
+    technologies: [".NET Framework 4.8", "C#", "SQL Server", "K6", "Entity Framework"],
   },
   {
-    id: "techcorp",
-    company: "TechCorp Solutions",
-    role: "Backend Developer",
-    period: "Mar 2020 — Dec 2021",
-    startYear: 2020,
-    endYear: 2021,
-    description:
-      "Development of RESTful APIs and integration services for B2B e-commerce platforms.",
-    achievements: [
-      "Built an integration layer with 15+ external payment providers using the Adapter pattern.",
-      "Optimized critical SQL queries, improving system performance by 35% under load.",
-      "Implemented a CI/CD pipeline with Azure DevOps that reduced deployment time from 2 hours to 15 minutes.",
-    ],
-    technologies: [".NET 6", "C#", "PostgreSQL", "Azure DevOps", "Redis"],
+    id: "bpd",
+    company: "Banco Popular Dominicano via NEORIS",
+    role: {
+      en: "Software QA Tester",
+      es: "Software QA Tester"
+    },
+    period: {
+      en: "Feb 2025 — Nov 2025",
+      es: "Feb 2025 — Nov 2025"
+    },
+    startYear: 2025,
+    endYear: 2025,
+    description: {
+      en: "ETL testing, data integrity validation, creation of test cases and plans, and automated testing.",
+      es: "Pruebas de ETL, integridad de data, creación de test cases y test plans, pruebas automatizadas"
+    },
+    achievements: {
+      en: [
+        "ETL Datamarts in production for the new core migration (Loan migration phase).",
+        "Creation of test cases with management and tracking via Jira - Zephyr.",
+        "Creation of test plans for the certificate migration phase.",
+      ],
+      es: [
+        "Datamarts de ETLs en producción para migración al nuevo core (Fase de migración de préstamos)",
+        "Creación de casos de prueba y administración y seguimiento a través de Jira",
+        "Creación de planes de prueba para la fase de migración de certificados",
+      ]
+    },
+    technologies: ["SAS Enterprise", "Cypress", "Oracle", "Jira - Zephyr", "Test Cases"],
   },
   {
-    id: "datasoft",
-    company: "DataSoft S.R.L.",
-    role: "Junior .NET Developer",
-    period: "Jun 2018 — Feb 2020",
-    startYear: 2018,
-    endYear: 2020,
-    description:
-      "First professional role focused on developing internal web applications and reporting modules for the financial sector.",
-    achievements: [
-      "Developed an audit module that recorded all critical system operations with full traceability.",
-      "Created internal dashboards with ASP.NET MVC and Entity Framework for the finance team.",
-      "Participated in the design of a normalized database schema that supported system growth.",
-    ],
-    technologies: ["ASP.NET MVC", "C#", "SQL Server", "Entity Framework", "jQuery"],
+    id: "bhd",
+    company: "Banco BHD",
+    role: {
+      en: "Programming Intern",
+      es: "Pasante programador"
+    },
+    period: {
+      en: "Sep 2024 — Dec 2024",
+      es: "Sep 2024 — Dic 2024"
+    },
+    startYear: 2024,
+    endYear: 2024,
+    description: {
+      en: "Initial professional role as an intern for the BAW unit at Banco BHD, working on the PEGA system.",
+      es: "Primer rol profesional como pasante para la célula de BAW en el banco BHD, trabajando en el sistema de PEGA"
+    },
+    achievements: {
+      en: [
+        "Delivered user stories for the BAW unit.",
+        "Obtained Pega Certified Systems Architect certification."
+      ],
+      es: [
+        "Entrega de historias de usuario para la célula de BAW",
+        "Certificado de Pega Certified Systems Architect"
+      ]
+    },
+    technologies: ["Pega Systems", "Azure DevOps", "Pega Dev Studio"],
   },
 ];
