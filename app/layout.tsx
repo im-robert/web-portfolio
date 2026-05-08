@@ -1,24 +1,25 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { LanguageProvider } from "@/context/LanguageContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 export const metadata: Metadata = {
-  title: "Alex Rodríguez — Senior .NET Backend Developer",
+  title: "Roberto Capellan — .NET Backend Developer & Software QA Analyst",
   description:
-    "Portafolio profesional de Alex Rodríguez, Senior .NET Backend Developer y Software Architect especializado en C#, Azure y arquitecturas de microservicios.",
+    "Portfolio of Roberto Capellan, .NET Backend Developer & Software QA Analyst specialized in C#, and modern software architectures.",
   keywords: [
     ".NET developer",
     "C# developer",
     "backend developer",
     "software architect",
-    "Azure",
-    "microservices",
+    "QA Analyst",
     "portfolio",
   ],
-  authors: [{ name: "Alex Rodríguez" }],
+  authors: [{ name: "Roberto Capellan" }],
   openGraph: {
-    title: "Alex Rodríguez — Senior .NET Backend Developer",
+    title: "Roberto Capellan — .NET Backend Developer & Software QA Analyst",
     description:
-      "Arquitecturas de software sólidas, escalables y orientadas a resultados.",
+      "Solid architectures, lasting code.",
     type: "website",
   },
 };
@@ -29,12 +30,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body>{children}</body>
+      <body>
+        <ThemeProvider>
+          <LanguageProvider>
+            {children}
+          </LanguageProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

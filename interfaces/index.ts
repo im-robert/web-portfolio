@@ -1,46 +1,51 @@
-export interface Experience {
-  id: string;
-  company: string;
-  role: string;
-  period: string;
-  startYear: number;
-  endYear: number | null;
-  description: string;
-  achievements: string[];
-  technologies: string[];
-}
+
+export type ProjectCategory = "Backend" | "Fullstack";
 
 export interface Project {
   id: string;
-  name: string;
-  description: string;
-  challenge: string;
-  solution: string;
+  name: {
+    en: string;
+    es: string;
+  };
+  description: {
+    en: string;
+    es: string;
+  };
   stack: string[];
   category: ProjectCategory;
+  featured?: boolean;
   repoUrl?: string;
   demoUrl?: string;
-  featured?: boolean;
 }
 
-export type ProjectCategory = "Backend" | "Fullstack" | "Integrations";
+export interface Experience {
+  id: string;
+  company: string;
+  role: {
+    en: string;
+    es: string;
+  };
+  period: {
+    en: string;
+    es: string;
+  };
+  startYear: number;
+  endYear: number | null;
+  description: {
+    en: string;
+    es: string;
+  };
+  achievements: {
+    en: string[];
+    es: string[];
+  };
+  technologies: string[];
+}
+
+export type TechCategory = "Language" | "Framework" | "Database" | "Architecture" | "Tools";
 
 export interface TechItem {
   name: string;
   category: TechCategory;
-  icon?: string;
-}
-
-export type TechCategory =
-  | "Language"
-  | "Framework"
-  | "Database"
-  | "Cloud"
-  | "Architecture"
-  | "DevOps";
-
-export interface SocialLink {
-  label: string;
-  url: string;
-  icon: string;
+  level: number;
 }

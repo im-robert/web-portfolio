@@ -1,21 +1,22 @@
+
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import { ArrowDown, Download } from "lucide-react";
+import { Download } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
-// SVG icons for missing lucide-react exports in this version
 const GithubIcon = ({ size = 18 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
-    <path d="M9 18c-4.51 2-5-2-7-2"/>
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+    <path d="M9 18c-4.51 2-5-2-7-2" />
   </svg>
 );
 
 const LinkedinIcon = ({ size = 18 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-    <rect width="4" height="12" x="2" y="9"/>
-    <circle cx="4" cy="4" r="2"/>
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
   </svg>
 );
 
@@ -26,14 +27,16 @@ const containerVariants: Variants = {
 
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 24 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.7, ease: [0.4, 0, 0.2, 1] as any } 
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.4, 0, 0.2, 1] as any }
   },
 };
 
 export default function HeroSection() {
+  const { t } = useLanguage();
+
   return (
     <section
       style={{
@@ -103,21 +106,21 @@ export default function HeroSection() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          style={{ maxWidth: "900px" }}
+          style={{ maxWidth: "1000px" }}
         >
           {/* Eyebrow */}
-          <motion.div variants={itemVariants} style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2rem" }}>
-            <span className="accent-line" />
+          <motion.div variants={itemVariants} style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2.5rem" }}>
+            <span className="accent-line" style={{ width: "3.5rem" }} />
             <span
               style={{
                 fontFamily: "var(--font-mono)",
-                fontSize: "0.72rem",
-                letterSpacing: "0.15em",
+                fontSize: "0.8rem",
+                letterSpacing: "0.18em",
                 color: "var(--accent)",
                 textTransform: "uppercase",
               }}
             >
-              Full Stack Developer
+              {t.hero.eyebrow}
             </span>
           </motion.div>
 
@@ -126,22 +129,22 @@ export default function HeroSection() {
             variants={itemVariants}
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(3.5rem, 8vw, 7.5rem)",
+              fontSize: "clamp(3.7rem, 10vw, 7.7rem)",
               fontWeight: 300,
-              lineHeight: 1.0,
+              lineHeight: 0.95,
               letterSpacing: "-0.03em",
               color: "var(--text-1)",
-              marginBottom: "1.5rem",
+              marginBottom: "2rem",
             }}
           >
-            Solid
+            {t.hero.title_part1}
             <br />
             <em style={{ fontStyle: "italic", color: "var(--accent)", fontWeight: 300 }}>
-              architectures,
+              {t.hero.title_accent}
             </em>{" "}
-            lasting
+            {t.hero.title_part2}
             <br />
-            code.
+            {t.hero.title_part3}
           </motion.h1>
 
           {/* Subtitle */}
@@ -149,99 +152,78 @@ export default function HeroSection() {
             variants={itemVariants}
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: "clamp(1rem, 2.5vw, 1.15rem)",
+              fontSize: "clamp(1.1rem, 2.5vw, 1.35rem)",
               color: "var(--text-2)",
-              maxWidth: "560px",
-              lineHeight: 1.7,
-              marginBottom: "3rem",
+              maxWidth: "640px",
+              lineHeight: 1.6,
+              marginBottom: "4rem",
             }}
           >
-            Specialized in the .NET ecosystem with experience building high-availability
-            backend systems. Expert in C#, SQL, and modern web architectures focused on
-            resilience and performance.
+            {t.hero.description}
           </motion.p>
 
           {/* CTAs */}
           <motion.div
             variants={itemVariants}
-            style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center" }}
+            style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", alignItems: "center" }}
           >
-            <a href="#contacto" className="btn-primary">
-              Let's work together
+            <a href="#contact" className="btn-primary" style={{ padding: "1.15rem 2.75rem", fontSize: "1rem" }}>
+              {t.hero.cta_primary}
             </a>
             <a
               href="/cv-roberto-capellan.pdf"
               download
               className="btn-ghost"
-              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", padding: "1.15rem 2.75rem", fontSize: "1rem" }}
             >
-              <Download size={14} />
-              Download CV
+              <Download size={20} />
+              {t.hero.cta_secondary}
             </a>
           </motion.div>
 
           {/* Social links */}
           <motion.div
             variants={itemVariants}
-            style={{ display: "flex", gap: "1.5rem", marginTop: "3.5rem" }}
+            style={{ display: "flex", gap: "1.25rem", marginTop: "5rem" }}
           >
-            <a
-              href="https://github.com/im-robert"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              style={{ color: "var(--text-3)", transition: "color 250ms ease" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-3)")}
-            >
-              <GithubIcon size={18} />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/roberto-capellan-62531024b/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              style={{ color: "var(--text-3)", transition: "color 250ms ease" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-3)")}
-            >
-              <LinkedinIcon size={18} />
-            </a>
-          </motion.div>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
-          style={{
-            position: "absolute",
-            bottom: "-3rem",
-            right: 0,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "0.5rem",
-          }}
-        >
-          <span
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.65rem",
-              letterSpacing: "0.15em",
-              color: "var(--text-3)",
-              textTransform: "uppercase",
-              writingMode: "vertical-rl",
-            }}
-          >
-            Scroll
-          </span>
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-          >
-            <ArrowDown size={12} color="var(--text-3)" />
+            {[
+              { icon: <GithubIcon size={24} />, href: "https://github.com/im-robert", label: "GitHub" },
+              { icon: <LinkedinIcon size={24} />, href: "https://www.linkedin.com/in/roberto-capellan-62531024b/", label: "LinkedIn" }
+            ].map((social, i) => (
+              <a
+                key={i}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "68px",
+                  height: "68px",
+                  borderRadius: "16px",
+                  background: "var(--surface-2)",
+                  border: "1px solid var(--border)",
+                  color: "var(--text-3)",
+                  transition: "all 300ms cubic-bezier(0.4, 0, 0.2, 1)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = "var(--accent)";
+                  e.currentTarget.style.borderColor = "var(--accent)";
+                  e.currentTarget.style.background = "var(--accent-dim)";
+                  e.currentTarget.style.transform = "translateY(-6px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "var(--text-3)";
+                  e.currentTarget.style.borderColor = "var(--border)";
+                  e.currentTarget.style.background = "var(--surface-2)";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+              >
+                {social.icon}
+              </a>
+            ))}
           </motion.div>
         </motion.div>
       </div>
